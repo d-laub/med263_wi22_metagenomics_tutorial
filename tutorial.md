@@ -238,6 +238,9 @@ This command will filter sequences to remove features that contain mitochondria 
 # Using QIIME 2 v2022.2. Activate qiime environment if not already activated.
 conda activate qiime2-2022.2
 
+#Change Directory to downloaded GitHub file
+cd 
+
 # Build phylogenetic tree from rep-seqs_filtered.qza
 qiime phylogeny align-to-tree-mafft-fasttree \
   --i-sequences rep-seqs_filtered.qza \
