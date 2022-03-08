@@ -1,0 +1,755 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Metagenomics with QIIME 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1754d893-818c-4b44-a692-e128f8f823a1" class="page sans"><header><h1 class="page-title">Metagenomics with QIIME 2</h1></header><div class="page-body"><nav id="5b46d2a3-5b64-44b1-8dde-86bd6ac405c2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#373a9e44-cc1f-40a4-aebe-00aca5648c16">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0995ce52-71fb-4360-9dc1-41055321f1d4"><strong>Cohort description</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b56f8ed0-a39a-4a9c-b5c1-683cfed95dfe">16S rRNA Gene Sequencing</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ce49aff1-1954-4deb-90b5-df2af8643a50">Before You Begin</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dd9ccf56-cd55-4bc5-956c-9abc3630f6f7">Step 0: Install QIIME 2 &amp; Clone Tutorial (Data)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#efa49d97-248a-410f-a9f8-86e30df4289e">Pre-Computed Steps</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2087efb4-88ae-4751-8157-167749154e9a">Step 1: Import</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d4c0d1d8-1ad8-4122-9c01-7b76f9f11903">Step 2: Denoise</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3c95ef40-8676-4c4c-b7c7-efc2f56ae536">Step 3: Assigning Taxonomy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#690e7230-411c-4b39-8425-12817dc50e37">Step 4a: Filtering Data</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99c56203-5386-4f70-833d-1071096743a8">Hands-on Steps</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5f290ee0-2ffd-4227-af53-0518fd5a0ac4">Step 4b: Building phylogenetic tree</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a4ebae58-d574-49c1-9e17-128d5b502547">Step 5: Alpha- and Beta-diversity analyses</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#213a50cb-5c95-4f70-aa80-8be7db4264a1"><strong>Step 6: Taxonomic Analysis</strong></a></div></nav><h1 id="373a9e44-cc1f-40a4-aebe-00aca5648c16" class="">Introduction</h1><p id="4791e8a3-e380-4c72-8af7-2dca7fb7da49" class="">In this tutorial, we will reproduce the results from <a href="https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-021-02245-8">Nuzzo et. al (2021)</a> using QIIME 2 to analyze longitudinal changes in microbial composition of adult females with uncomplicated urinary tract infections (uUTI) before and after treatment with the oral antibiotic Gepotidacin, which was in phase 2A clinical trials. Their study was motivated by an increasing appreciation for the potential negative impacts oral antibiotics have on patients’ microbiomes. Therefore, in the course of antibiotic drug development it is desirable to quantify the impact drug candidates have on the microbiome. By the end of this tutorial, you will have determined what effect Gepotidacin has on patients’ microbiomes and learned to use several fundamental tools in metagenomic analyses with QIIME 2 along the way!</p><h2 id="0995ce52-71fb-4360-9dc1-41055321f1d4" class=""><strong>Cohort description</strong></h2><p id="3ab373fb-7eec-492d-82a2-a0262df55c8b" class="">Female patients with recurrent uUTI were administered Gepotidacin for 5 days. Samples were collected with pharyngeal swabs, vaginal swabs and stool sampling at first day of dosing (Day 1), at the end of regimen (Day 5) and at a follow-up visit happening 28±3 days after Day 1.</p><table id="067c1537-62a1-4234-bb37-70da81f07776" class="simple-table"><thead><tr id="341d5e82-4ed6-4bac-a14f-6a899510ccc3"><th id="NheH" class="simple-table-header">Body site</th><th id="n`TM" class="simple-table-header">Day 1</th><th id="EPar" class="simple-table-header"></th><th id="&gt;cME" class="simple-table-header">Day 5</th><th id="{{?K" class="simple-table-header"></th><th id="kkR?" class="simple-table-header">Follow-up</th><th id="j]hP" class="simple-table-header"></th><th id=";kHP" class="simple-table-header">Total Collected</th><th id="\Bg&lt;" class="simple-table-header">Total Pass QC</th></tr></thead><tbody><tr id="331dc4da-f82f-417d-8b73-b1cb2dc0f2c1"><td id="NheH"></td><td id="n`TM"><strong>Collected</strong></td><td id="EPar"><strong>Passed QC</strong></td><td id="&gt;cME"><strong>Collected</strong></td><td id="{{?K"><strong>Passed QC</strong></td><td id="kkR?"><strong>Collected</strong></td><td id="j]hP"><strong>Passed QC</strong></td><td id=";kHP"></td><td id="\Bg&lt;"></td></tr><tr id="e5079116-f503-4d79-a2cd-81e888199314"><td id="NheH">GI Tract (stool)</td><td id="n`TM">13</td><td id="EPar">11</td><td id="&gt;cME">13</td><td id="{{?K">12</td><td id="kkR?">10</td><td id="j]hP">6</td><td id=";kHP">36</td><td id="\Bg&lt;">29</td></tr><tr id="9174ffed-ccbf-4de0-b6fd-b1fcd148db55"><td id="NheH">Pharyngeal (saliva)</td><td id="n`TM">21</td><td id="EPar">18</td><td id="&gt;cME">20</td><td id="{{?K">16</td><td id="kkR?">19</td><td id="j]hP">19</td><td id=";kHP">60</td><td id="\Bg&lt;">53</td></tr><tr id="3d4d8c43-56dd-40f2-9d2b-94b1095d120e"><td id="NheH">Vaginal (swabs)</td><td id="n`TM">21</td><td id="EPar">21</td><td id="&gt;cME">20</td><td id="{{?K">19</td><td id="kkR?">19</td><td id="j]hP">19</td><td id=";kHP">60</td><td id="\Bg&lt;">59</td></tr><tr id="fdba6ef2-061e-4f73-ba73-58e89592977e"><td id="NheH">Total</td><td id="n`TM">55</td><td id="EPar">50</td><td id="&gt;cME">53</td><td id="{{?K">47</td><td id="kkR?">48</td><td id="j]hP">44</td><td id=";kHP">156</td><td id="\Bg&lt;">141</td></tr></tbody></table><h2 id="b56f8ed0-a39a-4a9c-b5c1-683cfed95dfe" class="">16S rRNA Gene Sequencing</h2><p id="c19fcfc7-c410-4988-9ac7-389ed0af93d5" class="">Nuzzo et al. used 16s rRNA V4 gene sequencing from their clinical trial patients to quantify their microbiomes. 16S rRNA gene sequencing is one of the most attractive methods for identifying microbial species present in diverse communities because, as the name implies, it enriches for the 16S rRNA gene before sequencing. Sequencing the 16S rRNA gene is particularly useful microbiome quantification because it has both ~8 highly conserved regions that enable efficient targeting for PCR amplification and ~9 variable regions across the bacteria domain that enable taxonomy classification.</p><figure id="1d1b9bf8-d4ea-45d1-a646-3ca603ac6b33" class="image"><a href="Metagenomi%201d1b9/Untitled.png"><img style="width:432px" src="Metagenomi%201d1b9/Untitled.png"/></a></figure><p id="89f6fd6f-705f-4d07-9627-30e93e2826d3" class="">The variable regions allow us to associate reads with different microbial species and therefore compute the relative abundances of species in a sample.</p><h1 id="ce49aff1-1954-4deb-90b5-df2af8643a50" class="">Before You Begin</h1><p id="322bf47e-ba05-4b78-8a26-0ae847bb8c7e" class="">Complete Step 0 and ensure you can successfully activate QIIME 2 on your computer. Steps 1-4a are computationally demanding and have been executed for you; their outputs are provided in the tutorial’s GitHub repository.</p><h2 id="dd9ccf56-cd55-4bc5-956c-9abc3630f6f7" class="">Step 0: Install QIIME 2 &amp; Clone Tutorial (Data)</h2><p id="18abdd98-aab8-4256-9f49-a9421495dcb8" class="">Install QIIME 2 as a conda environment named <code>qiime2-2022.2</code>. Choose the instructions that match your operating system.</p><ul id="7b1c7087-8884-466c-9f42-468d8d3a12f9" class="toggle"><li><details open=""><summary><strong>Mac</strong></summary><pre id="586b1ea0-da76-496f-88d9-ce6fe2f43d98" class="code"><code>wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-osx-conda.yml
+conda env create -n qiime2-2022.2 --file qiime2-2022.2-py38-osx-conda.yml
+# OPTIONAL CLEANUP
+rm qiime2-2022.2-py38-osx-conda.yml</code></pre></details></li></ul><ul id="aa1ef212-ac97-4d5a-a371-e3f980a2298e" class="toggle"><li><details open=""><summary><strong>Linux</strong></summary><pre id="0ed5614b-1639-4652-bfb8-e666ff8404cd" class="code"><code>wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-linux-conda.yml
+conda env create -n qiime2-2022.2 --file qiime2-2022.2-py38-linux-conda.yml
+# OPTIONAL CLEANUP
+rm qiime2-2022.2-py38-linux-conda.yml</code></pre></details></li></ul><ul id="878524f2-39f4-46a2-8816-2725f67f1e5a" class="toggle"><li><details open=""><summary><strong>Windows (WSL)</strong></summary><p id="73d0114c-72cb-4cbe-8a70-8b817ab27b67" class="">You should skip any step that you have done prior.</p><ol type="1" id="fae57b6c-32aa-42dc-b7c1-2ecfe4096f74" class="numbered-list" start="1"><li><a href="https://docs.microsoft.com/en-us/windows/wsl/install">Install WSL</a></li></ol><ol type="1" id="6b1a3d9d-954d-4efe-b69d-b635e6c6567d" class="numbered-list" start="2"><li><a href="https://docs.conda.io/en/latest/miniconda.html">Install </a><a href="https://docs.conda.io/en/latest/miniconda.html"><code>miniconda</code></a></li></ol><ol type="1" id="e82baad2-bd42-423f-8e2a-d7a802551a3f" class="numbered-list" start="3"><li>Install Qiime2</li></ol><pre id="d19fcef9-ce7d-4af0-8bc1-f096aa66d347" class="code"><code>wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-linux-conda.yml
+conda create -n qiime2-2022.2
+conda env update -n qiime2-2022.2 -f qiime2-2022.2-py38-linux-conda.yml
+# OPTIONAL CLEANUP
+rm qiime2-2022.2-py38-linux-conda.yml</code></pre><p id="08f6a1c1-bc45-4f42-a635-64bce9ad5daf" class="">Note: If you run into issues installing Qiime2 (as we did), try reinstalling conda (backup your environments first!) and installing Qiime2 again.</p></details></li></ul><p id="4df0da65-f07d-44b3-a7b1-5c1c71408d75" class="">After installing QIIME 2, confirm that the installation was successful by activating your new environment and checking that <code>qiime</code> runs.</p><pre id="cc9a6e83-81eb-4b5b-bbed-37e9335438ef" class="code"><code>conda activate qiime2-2022.2
+qiime</code></pre><p id="749e7cc0-2b48-4ec3-bcd8-179b6d1e700a" class="">Then, clone the GitHub repository for the tutorial.</p><pre id="82c9adf7-1a75-4103-bc87-fe1ccaa0264b" class="code"><code>git clone https://github.com/d-laub/med263_wi22_metagenomics_tutorial.git</code></pre><h1 id="efa49d97-248a-410f-a9f8-86e30df4289e" class="">Pre-Computed Steps</h1><h2 id="2087efb4-88ae-4751-8157-167749154e9a" class="">Step 1: Import</h2><p id="6f45d276-5c34-4a05-9afb-91acd934d6f4" class="">The first thing we do is call <code>qiime tools import</code> which imports 16S FASTQ reads from the sequencing experiment into QIIME 2 and generates a <code>.qza</code> file, short for QIIME Zipped Artifact.</p><pre id="ad8d99f8-ced0-4c06-ab85-e6711cd5b908" class="code"><code># Import Data as a QIIME 2 artifact
+qiime tools import \
+  --type &#x27;SampleData[PairedEndSequencesWithQuality]&#x27; \ # We have paired end reads with quality scores
+  --input-path raw_data \ # Folder containing all raw data
+  --input-format PairedEndFastqManifestPhred64V2 \ # Specifically, PHRED 64 quality scores
+  --output-path demux.qza</code></pre><p id="861ca11a-156f-4cbf-8309-fe28e38ddabb" class="">Next we use <code>qiime demux summarize</code> to generate a QIIME Zipped Visualization (<code>.qzv</code>) file from the QZA file. </p><pre id="80b23a62-b2c0-45bf-ac5e-2b434648cc34" class="code"><code>qiime demux summarize \
+  --i-data demux.qza \
+  --o-visualization demux.qzv</code></pre><p id="48079311-bbd9-4e62-8819-348e1e95d22e" class="">The QZV file provides a summary and sometimes statistics for the data in the QZA that we can then view:</p><pre id="75dfe316-f2f4-4a1d-9b2e-8fcdcdb465ba" class="code"><code>qiime tools view demux.qzv</code></pre><p id="ba834cf5-3dfd-4ed4-97e9-5cbf65c1d93e" class="">When given a demux QZV, this command will open a browser window with visualizations characterizing the samples and sequencing quality.</p><p id="56069dde-f552-47fb-ba8e-18bdc54ee55f" class=""><strong>Note</strong> <strong>if you are using WSL:</strong> you cannot readily use <code>qiime tools view</code>, but you can upload any <code>.qvz</code> file to <a href="http://view.qiime2.org">view.qiime2.org</a> instead.</p><h2 id="d4c0d1d8-1ad8-4122-9c01-7b76f9f11903" class="">Step 2: Denoise</h2><p id="72d43de0-40dc-432a-9848-01e802865b23" class="">Next we use <code>qiime dada2 denoise-paired</code> to filter paired-end sequences based on quality, merge dereplicates, and remove chimeric reads with DADA2.</p><pre id="7cf76b8a-c876-422b-8719-74731da6718b" class="code"><code># Executing DADA2 dereplication
+qiime dada2 denoise-paired \
+  --i-demultiplexed-seqs demux.qza \ # Input demultiplexed reads
+  --p-n-threads 8 \ # Use 8 threads
+  --p-trunc-len-f 150 \ # Sets trim length for forward reads
+  --p-trunc-len-r 149 \ # Sets trim length for reverse reads
+  --o-table table.qza \ # Counts table
+  --o-denoising-stats stats.qza \ # Statistics from DADA2 (number of reads passing filtering, etc.)
+  --o-representative-sequences rep-seqs.qza # Assigned OTU names and corresponding DNA sequences</code></pre><p id="56d5c9d7-6590-497b-bf43-52d14f8f7f54" class="">This will denoise our sample reads and generate three artifacts:</p><ol type="1" id="6bd2a9c8-b77c-45a7-b083-3de3cd18aa3a" class="numbered-list" start="1"><li>An <strong>amplicon sequence variant</strong> (ASV) counts table <code>table.qza</code> quantifying how many of each ASV was observed.</li></ol><ol type="1" id="4fd0cc4f-9bed-4425-9af2-763aa9ebb4e5" class="numbered-list" start="2"><li>A representative sequence table <code>rep-seqs.qza</code> that contains all the unique ASVs observed, each corresponding to a count in <code>table.qza</code>.</li></ol><ol type="1" id="e818bb3f-9442-4b4f-a94e-b617d0e3e884" class="numbered-list" start="3"><li>A summary of sample data and statistics <code>stats.qza</code> containing informative metrics about the denoising process.</li></ol><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="ae524cce-f1df-4d8b-90e9-07eb9614f0dd"><div style="font-size:1.5em"><span class="icon">❓</span></div><div style="width:100%"><strong>What is an amplicon sequence variant (ASV)?</strong>
+Simply put, ASVs are DNA <em>sequences</em>. However, the name refers to that these sequences are identified by denoising PCR <em>amplicon </em>reads and that they <em>vary </em>across samples and/or species.</div></figure><h2 id="3c95ef40-8676-4c4c-b7c7-efc2f56ae536" class="">Step 3: Assigning Taxonomy</h2><p id="c0ea6775-b3f4-4f11-9773-71c87c9a1ac3" class="">We will explore the bacterial taxonomic composition of the samples and relate that to our sample metadata.</p><p id="23aa54a2-298e-496d-82fa-e1b064bd1a6f" class="">Note: This script assumes you have Silva v.138 pre-trained classifier downloaded in the selected folder. This classifier is supplied on the Github.</p><pre id="8228c677-364a-4d58-8448-2645040aecd4" class="code"><code>echo -e &quot;Assign taxonomy against SILVA 138 pretrained V4&quot;
+qiime feature-classifier classify-sklearn \
+  --i-reads rep-seqs.qza \
+  --i-classifier databases/silva-138-99-515-806-nb-classifier.qza \
+  --o-classification taxonomy.qza</code></pre><p id="e9097f92-15aa-465f-8797-d0973e5279a9" class=""><code>qiime feature-classifier classify-sklearn</code></p><p id="8681d832-7758-4259-bdf0-662d2d04f176" class="">This command will assign the taxonomy to the sequence in the artifact by using a pre-trained naïve Bayes classifier from the QIIME 2 website. Users can also follow the instructions on the QIIME 2 website to train their own classifier with their own reference database and sequencing parameters.</p><pre id="80742587-598c-4ba1-8565-f8c16198e70c" class="code"><code>qiime metadata tabulate \
+  --m-input-file taxonomy.qza \
+  --o-visualization taxonomy.qzv </code></pre><p id="71682cc5-8664-40bd-b8a3-558b27ab5af1" class=""><code>qiime metadata tabulate</code></p><p id="da4b44f5-976f-4d3b-8e2d-c46bc48af275" class="">This command will create a taxonomic table for visualization.</p><h2 id="690e7230-411c-4b39-8425-12817dc50e37" class="">Step 4a: Filtering Data</h2><p id="b8210c19-88f3-4d71-9796-940f97cee72d" class="">We will filter the data by removing Singletons, Mitochondria, and Chloroplast. After filtering the data, we will build the phylogenetic tree.</p><pre id="326b66cc-a9ee-4a21-9e31-8455b91018d7" class="code"><code>echo -e &quot;#Remove Singletons&quot;
+qiime feature-table filter-features \
+  --i-table table.qza \
+  --p-min-frequency 2 \
+  --o-filtered-table feature-frequency-filtered-table.qza
+
+qiime feature-table filter-seqs \
+  --i-data rep-seqs.qza \
+  --i-table feature-frequency-filtered-table.qza \
+  --p-no-exclude-ids \
+  --o-filtered-data feature-frequency-filtered-rep-seqs.qza</code></pre><p id="91bb931f-a5cf-4512-9d9a-54fc10df6d03" class=""><code>qiime feature-table filter-features</code></p><p id="407e1caf-c499-48f3-b255-3505162b76f7" class="">This command will remove features with low abundance from the feature table by filtering all features with a total abundance of less than 2.</p><p id="da623afa-2730-46e7-b3b4-40296e1f9fbd" class=""><code>qiime feature-table filter-seqs</code></p><p id="35772caf-c640-46af-8d53-02c440ed2770" class="">This command will remove all sequences from the <code>rep-seqs.qza</code> file that do not have a matching ID in the filtered table. </p><pre id="a7951e8f-0314-4630-8a2d-15ee19be0e9d" class="code"><code># Remove Mitochondria and Chloroplast
+qiime taxa filter-table \
+  --i-table feature-frequency-filtered-table.qza \
+  --i-taxonomy taxonomy.qza \
+  --p-exclude mitochondria,chloroplast \
+  --o-filtered-table table_no_mit_chlo.qza
+
+qiime feature-table filter-samples \
+  --i-table table_no_mit_chlo.qza \
+  --p-min-frequency 9500 \
+  --o-filtered-table table_filtered.qza
+
+qiime taxa filter-seqs \
+  --i-sequences feature-frequency-filtered-rep-seqs.qza \
+  --i-taxonomy taxonomy.qza \
+  --p-exclude mitochondria,chloroplast \
+  --o-filtered-sequences rep-seqs_filtered.qza</code></pre><p id="9d8a6c1b-039d-4d74-8cba-5a8c8df62eac" class=""><code>qiime taxa filter-table</code></p><p id="315178ce-c621-440c-b010-687d1b0f0a34" class="">This command will remove features that contain mitochondria and chloroplast in the taxonomic annotation.</p><p id="237757fc-0a68-4da6-9b3d-370cf44e8856" class=""><code>qiime feature-table filter samples</code></p><p id="c10bce36-5966-4874-8e94-0c8e517012a4" class="">This command will exclude samples that have fewer than 9500 reads. Removing samples with significantly fewer reads than the majority of samples is recommended in sequencing analysis. </p><p id="1b02540d-44f3-4052-906b-919d5ca301d0" class=""><code>qiime taxa filter-seq</code></p><p id="97192976-45b3-414b-a1a6-836d1cf0a0aa" class="">This command will filter sequences to remove features that contain mitochondria and chloroplast in the taxonomic annotation.</p><h1 id="99c56203-5386-4f70-833d-1071096743a8" class="">Hands-on Steps</h1><h3 id="5f290ee0-2ffd-4227-af53-0518fd5a0ac4" class="">Step 4b: Building phylogenetic tree</h3><pre id="b66f1501-bd21-42e9-a2a9-42ea1764e41c" class="code"><code>### START HERE FOR TUTORIAL
+# Using QIIME 2 v2022.2. Activate qiime environment if not already activated.
+conda activate qiime2-2022.2
+
+# Build phylogenetic tree from rep-seqs_filtered.qza
+qiime phylogeny align-to-tree-mafft-fasttree \
+  --i-sequences rep-seqs_filtered.qza \
+  --o-alignment aligned-rep-seqs.qza \
+  --o-masked-alignment masked-aligned-rep-seqs.qza \
+  --o-tree unrooted-tree.qza \
+  --o-rooted-tree rooted-tree.qza</code></pre><p id="296b1d83-65d9-4078-9043-a98df2b7972d" class=""><code>qiime phylogeny align-to-tree-mafft-fasttree</code></p><p id="74d63dc2-159b-45cc-9760-13e46ad6c555" class="">This command generates a phylogenetic tree from the sequences in this study. This tree is required for certain community diversity analyses in Step 5. </p><h3 id="a4ebae58-d574-49c1-9e17-128d5b502547" class="">Step 5: Alpha- and Beta-diversity analyses</h3><p id="75b6e69b-1ce5-41ed-959d-99f75db8d16f" class="">Microbiome research uses ecological diversity metrics to describe microbial communities. Alpha-diversity metrics assess the diversity profile of an individual sample; the output is one numeric value per sample that indicates the level of diversity within the sample. Beta-diversity metrics assess the dissimilarity between samples; the output is a distance matrix that provides the distance between all sample pairs within the experiment. </p><p id="a67a5463-ad80-4534-9db6-747022b49599" class="">The command below calculates common alpha- and beta-diversity metrics for the samples provided in the table. An important parameter to set is the sampling depth, which is determined by the researcher after looking at the number of reads in each sample (these can be found by viewing the <code>table_filtered.qzv</code>). Samples with fewer reads than the sampling depth will be dropped from the analysis. We want to pick a sampling depth that is “as high as possible, while excluding as few samples as possible” (from QIIME 2 Moving Pictures tutorial). In this case, samples with low read counts have already been excluded. We can use the same value used in Step 4 for <code>--p-min-frequency</code>.</p><pre id="4495bc2e-f755-4221-a9ba-4f6bc25c19d0" class="code"><code>qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny rooted-tree.qza \
+  --i-table table_filtered.qza \
+  --p-sampling-depth 9500 \
+  --m-metadata-file metadata.txt \
+  --output-dir core-metrics-results
+
+cd core-metrics-results</code></pre><p id="fe9eef3a-5e20-4dcc-8781-9c7f0416deb7" class="">The above command creates a new directory called core-metrics-results and outputs files related to 3 alpha-diversity metrics and 4 beta-diversity metrics. The output for alpha-diversity metrics is a <code>_vector.qza</code> file, which contains the calculated alpha-diversity value for each sample. The output for beta-diversity metrics is a <code>_distance_matrix.qza</code>, <code>_pcoa_results.qza</code>, and <code>_emperor.qzv</code> file. The <code>_emperor.qzv</code> file is a 3-dimensional PCA plot generated from the corresponding distance matrix. It can be viewed like any other QZV file.</p><p id="0aa50fdf-2d5f-4e5b-91e2-356510372159" class="">Note: if you are using WSL you cannot readily use <code>qiime tools view</code>, but you can upload any <code>.qvz</code> file to <a href="http://view.qiime2.org">view.qiime2.org</a> instead.</p><pre id="6fad9e70-4acf-45e4-bd13-d25247e25a0a" class="code"><code>qiime tools view unweighted_unifrac_emperor.qzv</code></pre><figure id="23dd561a-d824-42c6-8858-85f710b008c2" class="image"><a href="Metagenomi%201d1b9/Untitled%201.png"><img style="width:432px" src="Metagenomi%201d1b9/Untitled%201.png"/></a><figcaption>Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).</figcaption></figure><p id="d211802e-7d08-421d-af27-f63feeef348a" class="">Note: you may have a slightly different arrangement of points and % variances in your PCs. This is due to stochasticity of the algorithm for phylogenetic tree inference in step 4b.</p><p id="0f9cf753-5146-4b42-ae5d-0b50a815068f" class="">We can also test for statistically significant differences in diversity values between the groups. </p><pre id="d26d0cf9-0973-43de-b744-1c25b9bbcf16" class="code"><code># Test for significant differences between groups for Faith&#x27;s PD metric
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity faith_pd_vector.qza \
+  --m-metadata-file ../metadata.txt \
+  --o-visualization faith-pd-group-significance.qzv
+qiime tools view faith-pd-group-significance.qzv
+
+# Test for signficant differences between groups for Unweighted UniFrac metric. 
+qiime diversity beta-group-significance \
+  --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file ../metadata.txt \
+  --m-metadata-column dummy \
+  --o-visualization unweighted_unifrac-dummy-significance.qzv \
+  --p-pairwise
+qiime tools view unweighted_unifrac-dummy-significance.qzv</code></pre><figure id="e4f3c951-b57c-4335-8f8b-2f0cf8bd0e7d" class="image"><a href="Metagenomi%201d1b9/Untitled%202.png"><img style="width:576px" src="Metagenomi%201d1b9/Untitled%202.png"/></a><figcaption>Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. </figcaption></figure><h2 id="213a50cb-5c95-4f70-aa80-8be7db4264a1" class=""><strong>Step 6: Taxonomic Analysis</strong></h2><p id="6b61b417-28ef-4283-a8d8-97d4f30e19a4" class="">We often want to know which microbial taxa are present in our samples. The provided <code>taxonomy.qza</code> file contains a taxonomic identification for each sequence present in the <code>table.qza</code> file. These identities were assigned by comparing the sequences to the SILVA 138 99% OTUs reference database of 16S sequences, constrained by the primers used for this sequencing experiment. We will use the <code>taxonomy.qza</code> file to generate taxonomy bar plots for this study.</p><pre id="1e0c4b03-3bea-4d41-b48d-1423d1aa85c4" class="code"><code>cd .. # Navigate out of core-metrics-results directory, back to main directory
+ 
+qiime taxa barplot \
+  --i-table table_filtered.qza \
+  --i-taxonomy taxonomy.qza \
+  --m-metadata-file metadata.txt \
+  --o-visualization taxa-bar-plots.qzv
+qiime tools view taxa-bar-plots.qzv</code></pre><p id="fcfa4ccb-b98a-4fb4-af17-b48f3aba4ea5" class="">Explore the QZV file. We can view different taxonomic levels (kingdom, phylum, class, etc.) by selecting the “Taxonomic level” dropdown at the top. We can also rearrange the order of samples on the x-axis by sorting on different metadata columns. The figure itself can be downloaded as an SVG file (compatible with Illustrator, Inkscape, etc.) or the data can be downloaded as a CSV file containing a counts table. </p><p id="1a1e0fff-7d9b-4246-83d4-1e6dad90682e" class="">
+</p></div></article></body></html>
