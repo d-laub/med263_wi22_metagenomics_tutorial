@@ -138,8 +138,8 @@ This will denoise our sample reads and generate three artifacts:
 3. A summary of sample data and statistics `stats.qza` containing informative metrics about the denoising process.
 
 <aside>
-❓ **What is an amplicon sequence variant (ASV)?**
-Simply put, ASVs are DNA *sequences*. However, the name refers to that these sequences are identified by denoising PCR *amplicon* reads and that they *vary* across samples and/or species.
+    ❓ <b>What is an amplicon sequence variant (ASV)?</b>
+    Simply put, ASVs are DNA <em>sequences</em>. However, the name refers to that these sequences are identified by denoising PCR <em>amplicon</em> reads and that they <em>vary</em> across samples and/or species.
 
 </aside>
 
