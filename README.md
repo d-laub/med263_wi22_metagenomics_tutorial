@@ -276,7 +276,7 @@ Note: if you are using WSL you cannot readily use `qiime tools view`, but you ca
 qiime tools view unweighted_unifrac_emperor.qzv
 ```
 
-![Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).](images/Untitled 1.png)
+<img alt='Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).' src='images/Untitled 1.png'>
 
 Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).
 
@@ -302,7 +302,7 @@ qiime diversity beta-group-significance \
 qiime tools view unweighted_unifrac-dummy-significance.qzv
 ```
 
-![Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. ](images/Untitled 2.png)
+<img alt='Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot.' src='images/Untitled 2.png'>
 
 Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. 
 
