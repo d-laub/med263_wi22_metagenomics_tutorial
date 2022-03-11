@@ -20,7 +20,7 @@ In this tutorial, we will reproduce the results from [Nuzzo et. al (2021)](https
 
 Nuzzo et al. used 16s rRNA V4 gene sequencing from their clinical trial patients to quantify their microbiomes. 16S rRNA gene sequencing is one of the most attractive methods for identifying microbial species present in diverse communities because, as the name implies, it enriches for the 16S rRNA gene before sequencing. Sequencing the 16S rRNA gene is particularly useful microbiome quantification because it has both ~8 highly conserved regions that enable efficient targeting for PCR amplification and ~9 variable regions across the bacteria domain that enable taxonomy classification.
 
-![Untitled](Metagenomi%201d1b9/Untitled.png)
+![Untitled](images/Untitled.png)
 
 The variable regions allow us to associate reads with different microbial species and therefore compute the relative abundances of species in a sample.
 
@@ -277,7 +277,7 @@ Note: if you are using WSL you cannot readily use `qiime tools view`, but you ca
 qiime tools view unweighted_unifrac_emperor.qzv
 ```
 
-![Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).](Metagenomi%201d1b9/Untitled%201.png)
+![Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).](image/Untitled 1.png)
 
 Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).
 
@@ -303,7 +303,7 @@ qiime diversity beta-group-significance \
 qiime tools view unweighted_unifrac-dummy-significance.qzv
 ```
 
-![Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. ](Metagenomi%201d1b9/Untitled%202.png)
+![Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. ](images/Untitled 2.png)
 
 Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. 
 
