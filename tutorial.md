@@ -277,7 +277,7 @@ Note: if you are using WSL you cannot readily use `qiime tools view`, but you ca
 qiime tools view unweighted_unifrac_emperor.qzv
 ```
 
-<img src="image/Untitled 1.png">
+<img src="images/Untitled 1.png">
 
 Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).
 
