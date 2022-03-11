@@ -2,11 +2,11 @@
 
 # Introduction
 
-In this tutorial, we will reproduce the results from [Nuzzo et. al (2021)](https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-021-02245-8) using QIIME 2 to analyze longitudinal changes in microbial composition of adult females with uncomplicated urinary tract infections (uUTI) before and after treatment with the oral antibiotic Gepotidacin, which was in phase 2A clinical trials. Their study was motivated by an increasing appreciation for the potential negative impacts oral antibiotics have on patients’ microbiomes. Therefore, in the course of antibiotic drug development it is desirable to quantify the impact drug candidates have on the microbiome. In particular, Gepotidacin has a unique mechanism of action (type IIA topoisomerase inhibitor) compared to other antibiotics so it was an open question as to what species would be affected the drug in vivo. By the end of this tutorial, you will have determined what effect Gepotidacin has on patients’ microbiomes and learned to use several fundamental tools in metagenomic analyses with QIIME 2 along the way!
+In this tutorial, we will reproduce the results from [Nuzzo et. al (2021)](https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-021-02245-8) using QIIME 2 to analyze longitudinal changes in microbial composition of adult females with uncomplicated urinary tract infections (uUTI) before and after treatment with the oral antibiotic Gepotidacin, which was in phase 2A clinical trials. Their study was motivated by an increasing appreciation for the potential negative impacts oral antibiotics have on patients’ microbiomes. Therefore, in the course of antibiotic drug development it is desirable to quantify the impact drug candidates have on the microbiome. In particular, Gepotidacin has a unique mechanism of action (type IIA topoisomerase inhibitor) compared to other antibiotics so it was an open question as to what species would be affected the drug *in vivo*. By the end of this tutorial, you will have determined what effect Gepotidacin has on patients’ microbiomes and learned to use several fundamental tools in metagenomic analyses with QIIME 2 along the way!
 
 ## **Cohort description**
 
-Female patients with recurrent uUTI were administered Gepotidacin for 5 days. Samples were collected with pharyngeal swabs, vaginal swabs and stool sampling at first day of dosing (Day 1), at the end of regimen (Day 5) and at a follow-up visit happening 28±3 days after Day 1.
+22 female patients with recurrent uUTI were administered Gepotidacin for 5 days. Samples were collected with pharyngeal swabs, vaginal swabs and stool sampling at first day of dosing (Day 1), at the end of regimen (Day 5) and at a follow-up visit happening 28±3 days after Day 1.
 
 | Body site | Day 1 |  | Day 5 |  | Follow-up |  | Total Collected | Total Pass QC |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -20,7 +20,7 @@ Female patients with recurrent uUTI were administered Gepotidacin for 5 days. Sa
 
 Nuzzo et al. used 16s rRNA V4 gene sequencing from their clinical trial patients to quantify their microbiomes. 16S rRNA gene sequencing is one of the most attractive methods for identifying microbial species present in diverse communities because, as the name implies, it enriches for the 16S rRNA gene before sequencing. Sequencing the 16S rRNA gene is particularly useful microbiome quantification because it has both ~8 highly conserved regions that enable efficient targeting for PCR amplification and ~9 variable regions across the bacteria domain that enable taxonomy classification.
 
-![Untitled](images/Untitled.png)
+![Untitled](Metagenomi%201d1b9/Untitled.png)
 
 The variable regions allow us to associate reads with different microbial species and therefore compute the relative abundances of species in a sample.
 
@@ -86,7 +86,7 @@ git clone https://github.com/d-laub/med263_wi22_metagenomics_tutorial.git
 
 ## Step 1: Import
 
-The first thing we do is call `qiime tools import` which imports 16S FASTQ reads from the sequencing experiment into QIIME 2 and generates a `.qza` file, short for QIIME Zipped Artifact.
+The first thing we do is call `qiime tools import` which imports 16S rRNA FASTQ reads from the sequencing experiment into QIIME 2 and generates a `.qza` file, short for QIIME Zipped Artifact.
 
 ```bash
 # Import Data as a QIIME 2 artifact
@@ -97,7 +97,7 @@ qiime tools import \
   --output-path demux.qza
 ```
 
-Next we use `qiime demux summarize` to generate a QIIME Zipped Visualization (`.qzv`) file from the QZA file. 
+Next we use `qiime demux summarize` to generate a QIIME Zipped Visualization (`.qzv`) file from the QZA file.
 
 ```bash
 qiime demux summarize \
@@ -137,11 +137,12 @@ This will denoise our sample reads and generate three artifacts:
 2. A representative sequence table `rep-seqs.qza` that contains all the unique ASVs observed, each corresponding to a count in `table.qza`.
 3. A summary of sample data and statistics `stats.qza` containing informative metrics about the denoising process.
 
-<aside>
-    ❓ <b>What is an amplicon sequence variant (ASV)?</b>
-Simply put, ASVs are DNA <em>sequences</em>. However, the name refers to that these sequences are identified by denoising PCR <em>amplicon</em> reads and that they <em>vary</em> across samples and/or species.
+❓**What is an amplicon sequence variant (ASV)?**
 
-</aside>
+- *Answer*
+    
+    Simply put, ASVs are DNA *sequences*. However, the name refers to that these sequences are identified by denoising PCR *amplicon* reads and that they *vary* across samples and/or species.
+    
 
 ## Step 3: Assigning Taxonomy
 
@@ -238,9 +239,6 @@ This command will filter sequences to remove features that contain mitochondria 
 # Using QIIME 2 v2022.2. Activate qiime environment if not already activated.
 conda activate qiime2-2022.2
 
-#Change Directory to downloaded GitHub file
-cd 
-
 # Build phylogenetic tree from rep-seqs_filtered.qza
 qiime phylogeny align-to-tree-mafft-fasttree \
   --i-sequences rep-seqs_filtered.qza \
@@ -279,9 +277,9 @@ Note: if you are using WSL you cannot readily use `qiime tools view`, but you ca
 qiime tools view unweighted_unifrac_emperor.qzv
 ```
 
-![Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).](images/Untitled 1.png)
+![Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).](Metagenomi%201d1b9/Untitled%201.png)
 
-Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (predose, day 5, followup visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).
+Unweighted UniFrac PCA plot. Sample color indicates type (saliva, stool, vaginal). Sample shape indicates time (pre-dose, day 5, follow-up visit). Plot background has been changed to white and plot axes have been changed to black (default is opposite).
 
 Note: you may have a slightly different arrangement of points and % variances in your PCs. This is due to stochasticity of the algorithm for phylogenetic tree inference in step 4b.
 
@@ -305,7 +303,7 @@ qiime diversity beta-group-significance \
 qiime tools view unweighted_unifrac-dummy-significance.qzv
 ```
 
-![Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. ](images/Untitled 2.png)
+![Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. ](Metagenomi%201d1b9/Untitled%202.png)
 
 Boxplot from faith-pd-group-significance.qzv. This plot shows the Faith’s PD values for the “dummy” column of the metadata.txt file. The “dummy” column divides samples into groups based on sample type and collection time. Below this plot in the visualization are the p-values for differences between groups. The metadata column of interest can be changed using the “Column” dropdown menu above the plot. 
 
@@ -325,3 +323,13 @@ qiime tools view taxa-bar-plots.qzv
 ```
 
 Explore the QZV file. We can view different taxonomic levels (kingdom, phylum, class, etc.) by selecting the “Taxonomic level” dropdown at the top. We can also rearrange the order of samples on the x-axis by sorting on different metadata columns. The figure itself can be downloaded as an SVG file (compatible with Illustrator, Inkscape, etc.) or the data can be downloaded as a CSV file containing a counts table.
+
+# References
+
+**QIIME 2**
+
+Bolyen, E. *et al.* Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2. *Nat Biotechnol* **37**, 852–857 (2019).
+
+**Paper and Data**
+
+Nuzzo, A. *et al.* Microbiome recovery in adult females with uncomplicated urinary tract infections in a randomised phase 2A trial of the novel antibiotic gepotidacin (GSK2140944). *BMC Microbiology* **21**, 181 (2021).
