@@ -324,6 +324,12 @@ qiime tools view taxa-bar-plots.qzv
 
 Explore the QZV file. We can view different taxonomic levels (kingdom, phylum, class, etc.) by selecting the “Taxonomic level” dropdown at the top. We can also rearrange the order of samples on the x-axis by sorting on different metadata columns. The figure itself can be downloaded as an SVG file (compatible with Illustrator, Inkscape, etc.) or the data can be downloaded as a CSV file containing a counts table.
 
+# Common Pitfalls
+
+1. **Metadata.** Make sure your metadata file is formatted correctly for QIIME2. The instructions for formatting the metadata file can be found [here](https://docs.qiime2.org/2022.2/tutorials/metadata/). 
+2. **Sampling depth.** Choosing a sampling depth for diversity analyses (Step 5) can be tricky. The concept of sampling depth is explained in the QIIME2 [Moving Pictures tutorial](https://docs.qiime2.org/2022.2/tutorials/moving-pictures/) at the Alpha- and Beta-Diversity Analysis step. In general, try to choose a value that excludes samples with significantly lower read counts than most of the other samples, but still retains a large number of your samples for adequate power. 
+3. **Taxonomic classifier training.** The taxonomic classifiers provided by the QIIME2 website are appropriate to use if your samples were processed using the same primers and sequencing and filtering parameters as the tutorials. If your samples were processed with different parameters, the taxonomic results will not be accurate unless you train and use your own classifier. The instructions for doing this can be found [here](https://docs.qiime2.org/2022.2/tutorials/feature-classifier/).
+
 # References
 
 **QIIME 2**
